@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foam Loss Calculator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('java.png'); /* Add your background image file */
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            text-align: center;
+        }
+
+        h1 {
+            color: #3498db; /* Set your preferred color */
+            margin-top: 50px;
+        }
+
+        label {
+            display: block;
+            margin-top: 20px;
+            color: #ecf0f1; /* Light text color */
+        }
+
+        input {
+            width: 200px;
+            padding: 10px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #3498db; /* Button color */
+            color: #fff; /* Text color */
+            font-size: 16px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            background-color: #e74c3c; /* Button color */
+            color: #fff; /* Text color */
+            border: none;
+            border-radius: 5px;
+        }
+
+        div.result {
+            margin-top: 30px;
+            font-weight: bold;
+            color: #2ecc71; /* Result text color */
+        }
+    </style>
+</head>
+<body>
+    <h1>Foam Loss Calculator</h1>
+
+    <label for="foamLoss">Enter the percentage of foam loss per day</label>
+    <input type="text" id="foamLoss">
+
+    <label for="threshold">Enter threshold percentage</label>
+    <input type="text" id="threshold">
+
+    <button onclick="calculate()">Calculate</button>
+
+    <div class="result">
+        <label>Weeks: <span id="weeksOutput"></span></label>
+        <label>Remaining days: <span id="remainingDaysOutput"></span></label>
+    </div>
+
+    <script>
+        function calculate() {
+            var foamLoss = parseFloat(document.getElementById('foamLoss').value);
+            var threshold = parseFloat(document.getElementById('threshold').value);
+
+            var foamRemaining = 100.0;
+            var days = 0;
+
+            while (foamRemaining > threshold) {
+                foamRemaining -= foamRemaining * (foamLoss / 100);
+                days++;
+            }
+
+            var weeks = Math.floor(days / 7);
+            var remainingDays = days % 7;
+
+            document.getElementById('weeksOutput').innerText = weeks;
+            document.getElementById('remainingDaysOutput').innerText = remainingDays;
+        }
+    </script>
+</body>
+</html>
